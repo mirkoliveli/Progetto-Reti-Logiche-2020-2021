@@ -1,0 +1,40 @@
+Il diagramma mostra la struttura del progetto
+Frecce rosse rappresentano segnali di reset.
+le frecce gialle rappresentano il segnale di clock
+le frecce verdi rappresentano segnali utilizzati per specificare all'interno di quale processo mi trovo e se, tale processo può essere terminato. ogni processo ha un segnale (verde) come enable
+le frecce nere rappresentano segnali che trasportano dati relativi all'immagine
+
+
+
+gli stati: ad ogni stato corrisponde uno specifico processo all'interno del componente datapath fatta eccezione per lo stato 
+	filter_w in cui il componente non deve fare nulla, è uno stato di attesa durante cui viene scritto il valore nuovo del pixel in memoria. Inoltre ad ogni stato viene eseguito un processo che genera l'indirizzo di memoria utilizzato allo stato successivo 
+- reset riporta tutto il sistema nelle condizioni iniziali
+- sd_1, sd_2 vengono lette le dimensioni dell'immagine e salvate nei registri dim_1 dim_2
+	dato che la memoria lavora sul fronte di salita del clock e il componente sul fronte di discesa non è necessario attendere un ciclo di clock da quando viene letto il valore a quando questo è disponibile sull'interfaccia del componente
+
+- sd salvo nel registro size la dimensione dell'immagine calcolata come dim1*dim2
+- seek leggo la memoria dall'indirizzo 2 a 2+size-1. per ogni valore letto aggiorno i registri max_pixel, min_pixel se necessario.
+- shift_statecalcolo il valore di shift level usando max pixel e min pixel calcolati nello stato precedente
+la fase di filter ha un periodo di due cicli di clock ovvero
+
+1)ciclo clock n fronte salita (stato filter r)
+Lettura mem				
+aggiorno indirizzi mettendo quello di scrittura mem				
+aggiorno write enable (=1)
+
+2)ciclo clock n fronte discesa								
+componente filter calcola pixel e lo mette sull'uscita o_data	
+
+3)ciclo clock n+1 fronte salita (stato filter w)
+Scrittura mem
+Aggiorno indirizzi mettendo quelli di lettura mem
+aggiorno write enable (=0)
+
+4)ciclo clock n+1 fronte discesa
+il componente non fa nulla non essendoci alcun processo associato allo stato filter w
+
+riparto da 1 fino a che non termino i dati in memoria
+
+
+- end_state termine della conversione, alzo o_done per poi tornare nello stato di reset per prepararmi
+     ad una eventuale seconda immagine

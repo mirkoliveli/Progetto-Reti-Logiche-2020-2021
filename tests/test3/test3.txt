@@ -1,0 +1,4 @@
+in questo test provo a far partire senza immagine
+memoria iniziale tutta vuota finale anche, il componente si comporta in modo ragionevole 
+in figura si nota che il componente porta alta l'uscita o_done collegata al segnale tb_done, non appena
+lette le celle della dimensione dell'immagine

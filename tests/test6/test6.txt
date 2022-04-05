@@ -1,0 +1,1 @@
+test che utilizza più immagini in figura si notano le tre immagini con i tre segnali alti di start e i tre segnali di o_done connessi al segnale tb_done

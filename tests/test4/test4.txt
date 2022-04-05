@@ -1,0 +1,2 @@
+provo ad utilizzare un immagine con tutti i pixel uguali tra loro. mi aspetto che al termine ci siano tutti 0.
+questo test vuole analizzare il comportamento del sistema in un caso singolare

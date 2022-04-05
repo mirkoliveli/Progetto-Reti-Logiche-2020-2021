@@ -1,0 +1,3 @@
+stesso test di prima ma a una certa parte un segnale di reset per vedere come risponde il sistema
+il sistema risponde correttamente ripartendo da capo e riniziando subito la codifica (i_start infatti è rimasta =1)
+nell'immagine è evidenziato il momento in cui si alza il rst
